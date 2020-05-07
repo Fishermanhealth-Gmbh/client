@@ -353,7 +353,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "true"
+      "pre-commit": "yarn run patch"
     }
   }
 }
