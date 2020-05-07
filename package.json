@@ -1,7 +1,7 @@
 {
   "name": "iisy",
   "productName": "iisy",
-  "version": "4.0.7",
+  "version": "4.0.9",
   "description": "iisy client - working environment for agencies",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -102,14 +102,14 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
-      "private": false
+      "owner": "Fishermanhealth-Gmbh",
+      "repo": "client",
+      "private": true
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.peixdev.net/iisy/client.git"
+    "url": "git@github.com:Fishermanhealth-Gmbh/client.git"
   },
   "author": {
     "name": "Ole Zierau",
