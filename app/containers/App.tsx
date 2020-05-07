@@ -9,6 +9,8 @@ type Props = {
   communicator: Communication;
 };
 
+const version = require('package.json').version;
+
 function App(props: Props) {
   const { children } = props;
   const [loading, setLoading] = useState({
@@ -33,6 +35,7 @@ function App(props: Props) {
     <>
       <LoadingBar value={loading.value} variant={loading.variant} />
       {children}
+      <div style={{ position: 'fixed', left: 10, bottom: 10, fontSize: '11px' }}>v{version} © Fishermanhealth GmbH ❤️</div>
     </>
   );
 }
