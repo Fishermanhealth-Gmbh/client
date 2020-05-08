@@ -79,6 +79,8 @@ export default class AppUpdater {
       });
       autoUpdater.quitAndInstall();
     });
+    
+    autoUpdater.checkForUpdatesAndNotify();
   }
 }
 

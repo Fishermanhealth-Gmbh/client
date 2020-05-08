@@ -1,7 +1,7 @@
 {
   "name": "iisy",
   "productName": "iisy",
-  "version": "4.0.15",
+  "version": "4.0.16",
   "description": "iisy client - working environment for agencies",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
