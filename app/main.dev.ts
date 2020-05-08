@@ -37,15 +37,12 @@ export default class AppUpdater {
       });
     });
     autoUpdater.on('checking-for-update', () => {
-      // sendStatusToWindow('Checking for update...');
-
       comm.sendToReact(Channels.SHOW_MSG, {
         msg: 'Checking for Updates',
         variant: 'info'
       });
     });
     autoUpdater.on('update-available', () => {
-      // sendStatusToWindow('Update available.');
       comm.sendToReact(Channels.SHOW_MSG, {
         msg: 'Update available. Start download',
         variant: 'success'
