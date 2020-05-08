@@ -31,6 +31,12 @@ export default class AppUpdater {
       repo: 'client',
       token: '3d998cdbee2958350360479f63d63c03f0b5549f'
     });
+    autoUpdater.on('error', err => {
+      comm.sendToReact(Channels.SHOW_MSG, {
+        msg: err,
+        variant: 'warning'
+      });
+    });
     autoUpdater.on('checking-for-update', () => {
       // sendStatusToWindow('Checking for update...');
 
@@ -39,17 +45,41 @@ export default class AppUpdater {
         variant: 'info'
       });
     });
-    autoUpdater.on('update-available', info => {
+    autoUpdater.on('update-available', () => {
       // sendStatusToWindow('Update available.');
       comm.sendToReact(Channels.SHOW_MSG, {
         msg: 'Update available',
         variant: 'success'
       });
     });
-    autoUpdater.on('update-not-available', info => {
-      // sendStatusToWindow('Update not available.');
+    autoUpdater.on('download-progress', ({ percent }) => {
+      if (percent === 25) {
+        comm.sendToReact(Channels.SHOW_MSG, {
+          msg: `Download update: ${percent}%`,
+          variant: 'info'
+        });
+      }
+      if (percent === 50) {
+        comm.sendToReact(Channels.SHOW_MSG, {
+          msg: `Download update: ${percent}%`,
+          variant: 'info'
+        });
+      }
+      if (percent === 75) {
+        comm.sendToReact(Channels.SHOW_MSG, {
+          msg: `Download update: ${percent}%`,
+          variant: 'info'
+        });
+      }
     });
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.on('update-downloaded', info => {
+      // sendStatusToWindow('Update not available.');
+      comm.sendToReact(Channels.SHOW_MSG, {
+        msg: 'Update downloaded, will restart shortly',
+        variant: 'success'
+      });
+      autoUpdater.quitAndInstall();
+    });
   }
 }
 
