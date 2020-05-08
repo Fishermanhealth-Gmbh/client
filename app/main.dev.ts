@@ -49,22 +49,22 @@ export default class AppUpdater {
       });
     });
     autoUpdater.on('download-progress', ({ percent }) => {
-      const _percent = parseInt(percent, 10);
+      const _percent = Math.round(parseInt(percent, 10));
       if (_percent >= 25 && _percent <= 30) {
         comm.sendToReact(Channels.SHOW_MSG, {
-          msg: `Download update: ${percent}%`,
+          msg: `Download update: ${_percent}%`,
           variant: 'info'
         });
       }
       if (_percent >= 50 && _percent <= 55) {
         comm.sendToReact(Channels.SHOW_MSG, {
-          msg: `Download update: ${percent}%`,
+          msg: `Download update: ${_percent}%`,
           variant: 'info'
         });
       }
       if (_percent === 75) {
         comm.sendToReact(Channels.SHOW_MSG, {
-          msg: `Download update: ${percent}%`,
+          msg: `Download update: ${_percent}%`,
           variant: 'info'
         });
       }
