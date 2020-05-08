@@ -1,8 +1,9 @@
 import { BrowserWindow } from 'electron';
+import { log } from 'util';
 
 export let _window: BrowserWindow | null = null;
 
 export function setWindow(window: BrowserWindow) {
-  console.log(window);
+  log('set global window object')
   _window = window;
 }
