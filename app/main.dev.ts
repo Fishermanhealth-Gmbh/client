@@ -74,12 +74,12 @@ export default class AppUpdater {
     autoUpdater.on('update-downloaded', info => {
       // sendStatusToWindow('Update not available.');
       comm.sendToReact(Channels.SHOW_MSG, {
-        msg: 'Update downloaded, will restart shortly',
+        msg: 'Update downloaded, will restart now',
         variant: 'success'
       });
       autoUpdater.quitAndInstall();
     });
-    
+
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
