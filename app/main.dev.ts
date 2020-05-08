@@ -16,20 +16,39 @@ import MenuBuilder from './menu';
 import { Interceptor } from './utils/interceptor';
 import { Communication } from './utils/communication';
 import { setWindow } from './window';
+import { Channels } from './utils/config';
 
 // Standard scheme must be registered before the app is ready
 app.setAsDefaultProtocolClient('iisy');
 
 export default class AppUpdater {
-  constructor() {
+  constructor(comm: Communication) {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
     autoUpdater.setFeedURL({
-      provider: "github",
-      owner: "iisy-client-releases",
-      repo: "client",
-      token: "0c66b514535a6068bba1b14fc9d982b6e68f1336"
-    })
+      provider: 'github',
+      owner: 'Fishermanhealth-Gmbh',
+      repo: 'client',
+      token: '3d998cdbee2958350360479f63d63c03f0b5549f'
+    });
+    autoUpdater.on('checking-for-update', () => {
+      // sendStatusToWindow('Checking for update...');
+
+      comm.sendToReact(Channels.SHOW_MSG, {
+        msg: 'Checking for Updates',
+        variant: 'info'
+      });
+    });
+    autoUpdater.on('update-available', info => {
+      // sendStatusToWindow('Update available.');
+      comm.sendToReact(Channels.SHOW_MSG, {
+        msg: 'Update available',
+        variant: 'success'
+      });
+    });
+    autoUpdater.on('update-not-available', info => {
+      // sendStatusToWindow('Update not available.');
+    });
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
@@ -107,7 +126,7 @@ const createWindow = async () => {
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater();
+
   return mainWindow;
 };
 
@@ -128,6 +147,8 @@ app.on('ready', async () => {
   setWindow(mainWindow);
 
   const communication = new Communication(app, mainWindow!);
+
+  new AppUpdater(communication);
 
   new Interceptor(app, mainWindow!, communication);
 });
