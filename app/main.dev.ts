@@ -47,24 +47,25 @@ export default class AppUpdater {
     autoUpdater.on('update-available', () => {
       // sendStatusToWindow('Update available.');
       comm.sendToReact(Channels.SHOW_MSG, {
-        msg: 'Update available',
+        msg: 'Update available. Start download',
         variant: 'success'
       });
     });
     autoUpdater.on('download-progress', ({ percent }) => {
-      if (percent === 25) {
+      const _percent = parseInt(percent, 10);
+      if (_percent >= 25 && _percent <= 30) {
         comm.sendToReact(Channels.SHOW_MSG, {
           msg: `Download update: ${percent}%`,
           variant: 'info'
         });
       }
-      if (percent === 50) {
+      if (_percent >= 50 && _percent <= 55) {
         comm.sendToReact(Channels.SHOW_MSG, {
           msg: `Download update: ${percent}%`,
           variant: 'info'
         });
       }
-      if (percent === 75) {
+      if (_percent === 75) {
         comm.sendToReact(Channels.SHOW_MSG, {
           msg: `Download update: ${percent}%`,
           variant: 'info'
