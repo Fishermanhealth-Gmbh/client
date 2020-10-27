@@ -54,6 +54,7 @@ export class Client {
     // @ts-ignore
     const httpLink = new HttpLink({
       uri: envConfig.graphqlUri,
+      // @ts-ignore
       fetch
     });
     const authLink = new ApolloLink((operation, forward) => {

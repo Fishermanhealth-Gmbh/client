@@ -1,5 +1,5 @@
 import { App, dialog, BrowserWindow, IpcMainEvent } from 'electron';
-import { Filesystem } from './filesystem';
+import { Filesystem, IndesignVersion } from './filesystem';
 import { Client } from './client';
 import { ReadStream, createReadStream } from 'fs';
 import { Communication } from './communication';
@@ -33,7 +33,12 @@ export class Interceptor {
     communication.consumeFromReact(
       Channels.OPEN_ASSET,
       async (e, filename: string) => {
-        await this.filesystem.openAsset(filename);
+        try {
+          await this.filesystem.openWithVersion(IndesignVersion.A20, filename);
+          
+        } catch (error) {
+          console.log(error);
+        }
       }
     );
     communication.consumeFromReact(
@@ -146,8 +151,8 @@ export class Interceptor {
       });
 
       /** SHould we open the file? */
-      await this.filesystem.openAsset(tmpFilename);
-
+      await this.filesystem.openWithVersion(IndesignVersion.A20, tmpFilename);
+      
       this.mainWindow.focus();
 
       /** BLOCK ITEM WHEN DOWNLOADED */

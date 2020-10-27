@@ -15,9 +15,17 @@ import {
 import { v4 } from 'uuid';
 import { join } from 'path';
 import { Communication } from './communication';
-import { Channels } from './config';
+import {spawn} from 'child_process';
+
 
 const TOKEN_PREFIX = 'iisy-token-';
+
+
+export enum IndesignVersion {
+  A21 = "Adobe Indesign 2021",
+  A20 = "Adobe Indesign 2020",
+  A19 = "Adobe Indesign CC 2019"
+}
 
 function humanFileSize(bytes: number, si: boolean = true) {
   var thresh = si ? 1000 : 1024;
@@ -49,6 +57,19 @@ export class Filesystem {
 
     this.communication = communication;
   }
+
+  async openWithVersion(application: IndesignVersion, filename: string) {
+    try {
+      const sp =  spawn('open', ['-a', application, join(this.filePath, filename)]);
+      console.log(`open asset with ${application}`);
+      return sp;
+    } catch (error) {
+      console.log('open asset with standart app')
+      return this.openAsset(filename);
+    }
+    
+  }
+
   async openAsset(filename: string) {
     shell.openItem(join(this.filePath, filename));
   }
