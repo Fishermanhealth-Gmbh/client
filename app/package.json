@@ -1,7 +1,7 @@
 {
   "name": "iisy",
   "productName": "iisy",
-  "version": "4.0.25",
+  "version": "4.0.27",
   "description": "iisy client - working environment for agencies",
   "main": "./main.prod.js",
   "author": {

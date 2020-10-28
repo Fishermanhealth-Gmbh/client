@@ -24,6 +24,7 @@ const withCommunication = (WrappedComponent: any) => {
       communication.consumeFromMain(
         Channels.SHOW_MSG,
         (_, data: SnackbarData) => {
+          console.log(data);
           this.props.enqueueSnackbar(data.msg, { variant: data.variant });
         }
       );
