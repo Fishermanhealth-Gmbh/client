@@ -30,6 +30,7 @@ export default class AppUpdater {
       repo: 'client',
       token: '3d998cdbee2958350360479f63d63c03f0b5549f'
     });
+
     autoUpdater.on('error', err => {
       comm.sendToReact(Channels.SHOW_MSG, {
         msg: err,
@@ -133,10 +134,11 @@ const createWindow = async () => {
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
+  mainWindow.once('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
@@ -144,6 +146,8 @@ const createWindow = async () => {
       mainWindow.focus();
     }
     // Set window as static var
+    mainWindow.reload();
+
   });
 
   mainWindow.on('closed', () => {
@@ -177,9 +181,10 @@ app.on('ready', async () => {
 
   const communication = new Communication(app, mainWindow!);
 
-  new AppUpdater(communication);
 
   new Interceptor(app, mainWindow!, communication);
+  new AppUpdater(communication);
+
 });
 
 app.on('activate', () => {
