@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import {
   ApolloClient,
   ApolloLink,
@@ -5,22 +6,25 @@ import {
   HttpLink,
   InMemoryCache
 } from 'apollo-boost';
-import { envConfig } from './config';
 import axios, { AxiosInstance } from 'axios';
+import https from 'https';
 import FormData from 'form-data';
 import fetch from 'node-fetch';
 import { decode } from 'jsonwebtoken';
 import moment from 'moment';
-import { Auth } from './authAgain';
-import { Asset } from '../interfaces/asset';
+import { envConfig } from './config';
 
+import { Auth } from './authAgain';
 
 const commands: Map<string, Client> = new Map();
 
 export class Client {
   graph!: ApolloClient<any>;
+
   api!: AxiosInstance;
+
   token: string | undefined;
+
   constructor(token?: string) {
     this.token = token;
 
@@ -36,6 +40,7 @@ export class Client {
     this.setGraph(token);
     this.setApi(token);
   }
+
   setApi(token?: string) {
     const _token = this.token || token;
     this.api = axios.create({
@@ -44,11 +49,15 @@ export class Client {
       maxContentLength: Infinity,
       // @ts-ignore
       maxBodyLength: Infinity,
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       headers: {
         authorization: `Bearer ${_token}`
       }
     });
   }
+
   setGraph(token?: string) {
     const _token = this.token || token;
     // @ts-ignore
@@ -74,6 +83,7 @@ export class Client {
 
     return this;
   }
+
   /**
    * Check if token is authorized if not auth again
    * @param mainProcess
@@ -126,6 +136,7 @@ export class Client {
       }
     });
   }
+
   uploadTmp(id: string, data: Buffer) {
     const formData = new FormData();
     formData.append('file', data, 'file');
@@ -171,6 +182,7 @@ export class Client {
       }
     });
   }
+
   getSlides(slide: string, type: string = 'group') {
     return this.graph.query({
       query: gql`
