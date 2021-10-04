@@ -7,7 +7,7 @@ import {
   InMemoryCache
 } from 'apollo-boost';
 import axios, { AxiosInstance } from 'axios';
-import https from 'https';
+import { Agent } from 'https';
 import FormData from 'form-data';
 import fetch from 'node-fetch';
 import { decode } from 'jsonwebtoken';
@@ -49,7 +49,7 @@ export class Client {
       maxContentLength: Infinity,
       // @ts-ignore
       maxBodyLength: Infinity,
-      httpsAgent: new https.Agent({
+      httpsAgent: new Agent({
         rejectUnauthorized: false
       }),
       headers: {
@@ -64,7 +64,10 @@ export class Client {
     const httpLink = new HttpLink({
       uri: envConfig.graphqlUri,
       // @ts-ignore
-      fetch
+      fetch,
+      fetchOptions: {
+        agent: new Agent({ rejectUnauthorized: false })
+      }
     });
     const authLink = new ApolloLink((operation, forward) => {
       operation.setContext({
