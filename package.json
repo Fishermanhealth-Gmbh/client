@@ -285,7 +285,7 @@
     "apollo-link-context": "^1.0.18",
     "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.15",
-    "axios": "0.19.2",
+    "axios": "0.21.2",
     "connected-react-router": "^6.6.1",
     "core-js": "^3.6.4",
     "cross-fetch": "^3.0.6",
