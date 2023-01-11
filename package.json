@@ -298,7 +298,7 @@
     "form-data": "^2.5.0",
     "graphql-tools": "^4.0.5",
     "history": "^4.10.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.29.1",
     "node-fetch": "1.7.3",
